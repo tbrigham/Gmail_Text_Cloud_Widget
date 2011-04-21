@@ -68,4 +68,9 @@ public class GITextCloud extends AppWidgetProvider {
     }
 
 
+    public int someMethod() {
+        return 1;
+    }
+
+
 }
