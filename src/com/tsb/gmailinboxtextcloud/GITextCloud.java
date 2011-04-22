@@ -14,6 +14,7 @@ public class GITextCloud extends AppWidgetProvider {
     private static int count = 0;
     private static int widgetCount = 0;
     public static final String INCREMENT_COUNT_UPDATE = "INCREMENT_COUNT_UPDATE";
+    public static final int DEFAULT_MAX_EMAIL_COUNT = 10;
 
     @Override
     public void onEnabled(Context context) {
@@ -63,13 +64,8 @@ public class GITextCloud extends AppWidgetProvider {
         AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, cls);
         intent.setAction(INCREMENT_COUNT_UPDATE);
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (3 * 1000), pendingIntent);
-    }
-
-
-    public int someMethod() {
-        return 1;
     }
 
 
