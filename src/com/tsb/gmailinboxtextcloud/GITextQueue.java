@@ -1,5 +1,6 @@
 package com.tsb.gmailinboxtextcloud;
 
+import java.lang.reflect.Array;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Queue;
@@ -12,13 +13,23 @@ import java.util.Queue;
  */
 public class GITextQueue<E> implements Queue<E> {
 
-    private E[] mainQ;
+    private E mainQ[];
     private int maxSize;
     private int frontOfQueue;
     private int size;
 
-    public GITextQueue() {
+    public GITextQueue(Class<E> e) {
+        maxSize = GITextCloud.DEFAULT_MAX_EMAIL_COUNT;
+        frontOfQueue = 0;
+        this.size = 0;
+        mainQ = (E[])Array.newInstance(e, maxSize);
+    }
 
+    public GITextQueue(Class<E> e, int maxSize) {
+        this.maxSize = maxSize;
+        frontOfQueue = 0;
+        this.size = 0;
+        mainQ = (E[])Array.newInstance(e, maxSize);
     }
 
     /*
