@@ -3,7 +3,4 @@
     <string name="app_name">Gmail Text Cloud</string>
     <string name="widget_text">0</string>
     <string name="alarm">Alarm Manager</string>
-    <string name="increment_update">INCREMENT_COUNT_UPDATE</string>
-    <string name="reset_update">RESET_COUNT_UPDATE</string>
-    <string name="pause_update">PAUSE_COUNT_UPDATE</string>
 </resources>

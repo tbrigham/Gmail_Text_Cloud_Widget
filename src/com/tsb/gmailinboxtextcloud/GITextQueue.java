@@ -11,7 +11,7 @@ import java.util.Queue;
  * Date: 4/21/11
  * Time: 7:15 PM
  */
-public class GITextQueue<E> implements Queue<E> {
+public class GITextQueue<E> {
 
     private E mainQ[];
     private int maxSize;
@@ -60,16 +60,8 @@ public class GITextQueue<E> implements Queue<E> {
         return false;
     }
 
-    public Iterator<E> iterator() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public Object[] toArray() {
-        return new Object[0];  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public <T> T[] toArray(T[] ts) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public E[] toArray() {
+        return null;
     }
 
 
@@ -81,21 +73,6 @@ public class GITextQueue<E> implements Queue<E> {
         return false;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    public boolean containsAll(Collection<?> objects) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean addAll(Collection<? extends E> es) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean removeAll(Collection<?> objects) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public boolean retainAll(Collection<?> objects) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     public void clear() {
         //To change body of implemented methods use File | Settings | File Templates.

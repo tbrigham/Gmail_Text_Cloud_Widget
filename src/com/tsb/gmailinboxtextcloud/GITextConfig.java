@@ -14,7 +14,7 @@ import android.widget.Toast;
  * Date: 4/16/11
  * Time: 12:15 PM
  */
-public class GITCAlarmManager extends Activity {
+public class GITextConfig extends Activity {
 
     private AlarmManager am;
 
