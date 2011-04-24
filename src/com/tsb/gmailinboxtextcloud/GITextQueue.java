@@ -1,35 +1,36 @@
 package com.tsb.gmailinboxtextcloud;
 
-import java.lang.reflect.Array;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * Created by IntelliJ IDEA.
  * User: Tyler
  * Date: 4/21/11
  * Time: 7:15 PM
+ *
+ * Implements a fixed length queue where the most recent object added is in the [0] position and
+ * the object added last is in the [maxSize - 1] position.  objects that hang off the end are removed
+ * from the queue.
+ *
+ *
+ *
  */
 public class GITextQueue<E> {
 
-    private E mainQ[];
+    private LinkedList<E> mainQ;
     private int maxSize;
-    private int frontOfQueue;
-    private int size;
 
-    public GITextQueue(Class<E> e) {
+    public GITextQueue() {
         maxSize = GITextCloud.DEFAULT_MAX_EMAIL_COUNT;
-        frontOfQueue = 0;
-        this.size = 0;
-        mainQ = (E[])Array.newInstance(e, maxSize);
+        mainQ = new LinkedList<E>();
+        for (int i = 0; i<maxSize; i++) {
+
+        }
     }
 
-    public GITextQueue(Class<E> e, int maxSize) {
+    public GITextQueue(int maxSize) {
         this.maxSize = maxSize;
-        frontOfQueue = 0;
-        this.size = 0;
-        mainQ = (E[])Array.newInstance(e, maxSize);
+        mainQ = new LinkedList<E>();
     }
 
     /*
@@ -43,17 +44,17 @@ public class GITextQueue<E> {
         if (mainQ == null) {
             return -1;
         } else {
-            return mainQ.length;
+            return mainQ.size();
         }
     }
 
     public boolean isEmpty() {
-        return (size == 0);
+        return (mainQ.size() == 0);
     }
 
-    public boolean contains(Object o) {
+    public boolean contains(E object) {
         for (E aMainQ : mainQ) {
-            if (aMainQ.equals(o)) {
+            if (aMainQ.equals(object)) {
                 return true;
             }
         }
@@ -61,40 +62,42 @@ public class GITextQueue<E> {
     }
 
     public E[] toArray() {
-        return null;
+        return (E[])mainQ.toArray();
     }
 
 
     public boolean add(E e) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+        if (mainQ.size() == maxSize) {
+            mainQ.removeLast();
+            mainQ.add(0, e);
+            return true;
+        } else {
+            mainQ.add(0, e);
+            return true;
+        }
     }
 
-    public boolean remove(Object o) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public boolean remove(E object) {
+        for (int i = 0; i < mainQ.size(); i++) {
+            if (mainQ.get(i).equals(object)) {
+                mainQ.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
 
     public void clear() {
-        //To change body of implemented methods use File | Settings | File Templates.
+        mainQ.clear();
     }
 
-    public boolean offer(E e) {
-        return false;  //To change body of implemented methods use File | Settings | File Templates.
+    public int getMaxSize() {
+        return maxSize;
     }
 
-    public E remove() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public E get(int i) {
+        return mainQ.get(i);
     }
 
-    public E poll() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public E element() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
-
-    public E peek() {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 }
