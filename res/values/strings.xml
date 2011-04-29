@@ -3,4 +3,5 @@
     <string name="app_name">Gmail Text Cloud</string>
     <string name="widget_text"> </string>
     <string name="alarm">Alarm Manager</string>
+    <string name="null_fill"></string>
 </resources>

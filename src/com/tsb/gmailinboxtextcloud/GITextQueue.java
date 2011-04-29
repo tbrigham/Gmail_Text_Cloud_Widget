@@ -8,6 +8,10 @@ import java.util.LinkedList;
  * Date: 4/21/11
  * Time: 7:15 PM
  *
+ * DEPRECATED AND USELESS
+ * DEPRECATED AND USELESS
+ * DEPRECATED AND USELESS
+ *
  * Implements a fixed length queue where the most recent object added is in the [0] position and
  * the object added last is in the [maxSize - 1] position.  objects that hang off the end are removed
  * from the queue.

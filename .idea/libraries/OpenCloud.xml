@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="OpenCloud">
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/../opencloud" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="file://$PROJECT_DIR$/../opencloud/documentation" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="file://$PROJECT_DIR$/../opencloud/project/src" />
+    </SOURCES>
+    <jarDirectory url="file://$PROJECT_DIR$/../opencloud" recursive="false" />
+  </library>
+</component>
