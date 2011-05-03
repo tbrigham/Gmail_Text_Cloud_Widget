@@ -7,13 +7,16 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.widget.RemoteViews;
 import android.widget.Toast;
+import org.mcavallo.opencloud.Cloud;
 
 public class GITextCloud extends AppWidgetProvider {
     //private instance vars
     private static int count = 0;
     private static int widgetCount = 0;
+    private static Cloud gitc;
 
     //public constants
     public static final String INCREMENT_COUNT_UPDATE = "INCREMENT_COUNT_UPDATE";
@@ -26,6 +29,7 @@ public class GITextCloud extends AppWidgetProvider {
     public void onEnabled(Context context) {
         super.onEnabled(context);
         count = 0;
+        gitc = new Cloud();
         //set the first alarm
         setOneTimeAlarm(this.getClass(), context, 1, INCREMENT_COUNT_UPDATE);
 
@@ -47,7 +51,7 @@ public class GITextCloud extends AppWidgetProvider {
         }
         else if (intent.getAction().equals(INCREMENT_COUNT_UPDATE)) {
             //increment count, update views, and start another alarm
-            refreshViews(context, R.id.unread_inbox_count, R.layout.gitc_html, "" + count);
+            refreshViews(context, R.id.unread_inbox_count, R.layout.gitc_widget_html, "" + count);
 
             //Toast.makeText(context, "widget #" + widgetCount, Toast.LENGTH_SHORT).show();
             if (widgetCount != 0) {
@@ -59,8 +63,10 @@ public class GITextCloud extends AppWidgetProvider {
         else if (intent.getAction().equals(LAUNCH_GMAIL_GAPPS)) {
             //launch gmail application
             count = 0;
-            refreshViews(context, R.id.unread_inbox_count, R.layout.gitc_html, "" + count);
-            Toast.makeText(context, "widget clicked", Toast.LENGTH_SHORT).show();
+            Intent mailClient = new Intent(Intent.ACTION_VIEW);
+            mailClient.setClassName("com.google.android.gm", "com.google.android.gm.ConversationListActivity");
+            mailClient.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(mailClient);
         }
         else {
             //Toast.makeText(context, "count = " + count + " | " + intent.getAction(), Toast.LENGTH_LONG).show();
@@ -70,25 +76,21 @@ public class GITextCloud extends AppWidgetProvider {
     /** Called when the activity is first created. */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        Toast.makeText(context, "onUpdate()", Toast.LENGTH_SHORT).show();
-
-        //super.onUpdate(context, appWidgetManager, appWidgetIds);
+        //Toast.makeText(context, "onUpdate()", Toast.LENGTH_SHORT).show();
 
         //attach an onClick intent to the layout
         final Intent onClick = new Intent(context, GITextCloud.class);
         onClick.setAction(LAUNCH_GMAIL_GAPPS);
         PendingIntent onClickPending = PendingIntent.getBroadcast(context, 0, onClick, 0);
-        RemoteViews rv1 = new RemoteViews(context.getPackageName(), R.layout.gitc_html);
+        RemoteViews rv1 = new RemoteViews(context.getPackageName(), R.layout.gitc_widget_html);
         rv1.setOnClickPendingIntent(R.id.full_widget, onClickPending);
 
-        while (appWidgetIds.length == 0) {
-            //do nothing
-        }
 
         for (int appWidgetId : appWidgetIds) {
             appWidgetManager.updateAppWidget(appWidgetId, rv1);
         }
     }
+
 
     private void refreshViews(Context context, int viewID, int layoutID, String text) {
         RemoteViews rv = new RemoteViews(context.getPackageName(), layoutID);

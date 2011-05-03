@@ -12,15 +12,17 @@
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-            <!--
-            <intent-filter>
-                <action android:name="INCREMENT_COUNT_UPDATE" />
-                <action android:name="RESET_COUNT_UPDATE" />
-                <action android:name="PAUSE_COUNT_UPDATE"/>
-            </intent-filter>
-            -->
             <meta-data android:name="android.appwidget.provider" android:resource="@xml/gitc_widget"/>
         </receiver>
+
+        <!--
+        <activity android:name=".GITextConfig">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_CONFIGURE" />
+            </intent-filter>
+        </activity>
+        -->
+
         </application>
     <uses-permission android:name="com.google.android.gm.permission.READ_GMAIL"/>
 

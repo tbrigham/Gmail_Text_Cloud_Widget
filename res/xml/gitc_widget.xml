@@ -3,5 +3,6 @@
     android:minWidth="294dip"
     android:minHeight="72dip"
     android:updatePeriodMillis="1000"
-    android:initialLayout="@layout/gitc_html">
+    android:initialLayout="@layout/gitc_widget_html">
+    <!--android:configure="com.tsb.gmailinboxtextcloud.GITextConfig"-->
 </appwidget-provider>
