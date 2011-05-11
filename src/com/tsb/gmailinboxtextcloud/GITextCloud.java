@@ -30,6 +30,7 @@ public class GITextCloud extends AppWidgetProvider {
         super.onEnabled(context);
         count = 0;
         gitc = new Cloud();
+        gitc.setMaxTagsToDisplay(DEFAULT_MAX_EMAIL_COUNT);
         //set the first alarm
         setOneTimeAlarm(this.getClass(), context, 1, INCREMENT_COUNT_UPDATE);
 
