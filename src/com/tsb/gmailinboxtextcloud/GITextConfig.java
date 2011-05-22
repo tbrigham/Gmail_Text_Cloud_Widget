@@ -1,17 +1,14 @@
 package com.tsb.gmailinboxtextcloud;
 
 import android.app.ListActivity;
+import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.widget.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -21,32 +18,56 @@ import android.widget.TextView;
  */
 public class GITextConfig extends ListActivity {
 
+    private int mAppWidgetId = AppWidgetManager.INVALID_APPWIDGET_ID;
+
     private static final String[] LIST_ITEMS_TITLES = new String[] {
-            "Gmail Account", "Sync Content", "Show Most Recent", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM", "ITEM"
+            "Gmail Account", "Sync Content", "Show Most Recent"
     };
 
     private static final String[] LIST_ITEMS_SUB = new String[] {
-            "1 ", "2 ", "3 ", "***", "***", "***", "***", "***", "***", "***", "***", "***", "***"
+            "1 ", "2 ", "3 "
     };
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setResult(RESULT_CANCELED);
         setContentView(R.layout.gitc_config);
 
         ListMenuAdapter lma = new ListMenuAdapter(this, LIST_ITEMS_TITLES, LIST_ITEMS_SUB);
-
         setListAdapter(lma);
 
-        Button launchWebPage = (Button)findViewById(R.id.create_button);
+        findViewById(R.id.create_button).setOnClickListener(mOnClickListener);
 
-        launchWebPage.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
-                startActivity(new Intent( Intent.ACTION_VIEW , Uri.parse("http://www.fistfulofneurons.com/") ));
-            }
-        });
+        // Find the widget id from the intent.
+        Intent intent = getIntent();
+        Bundle extras = intent.getExtras();
+        if (extras != null) {
+            mAppWidgetId = extras.getInt(
+                    AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID);
+        }
+
+        // If they gave us an intent without the widget id, just bail.
+        if (mAppWidgetId == AppWidgetManager.INVALID_APPWIDGET_ID) {
+            finish();
+        }
 
     }
 
+    View.OnClickListener mOnClickListener = new View.OnClickListener() {
+        public void onClick(View v) {
+            // Make sure we pass back the original appWidgetId
+            Intent resultValue = new Intent();
+            resultValue.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, mAppWidgetId);
+            setResult(RESULT_OK, resultValue);
+            finish();
+        }
+    };
+
+    @Override
+    protected void onListItemClick (ListView l, View v, int position, long id) {
+        ListMenuItem item = (ListMenuItem) getListView().getItemAtPosition(position);
+        Toast.makeText(this, item.getHeader() , Toast.LENGTH_SHORT).show();
+    }
 
 
 
@@ -115,6 +136,4 @@ public class GITextConfig extends ListActivity {
         }
 
     }
-
-
 }
