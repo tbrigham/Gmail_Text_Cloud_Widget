@@ -7,9 +7,7 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.widget.RemoteViews;
-import android.widget.Toast;
 import org.mcavallo.opencloud.Cloud;
 
 public class GITextCloud extends AppWidgetProvider {
@@ -18,9 +16,11 @@ public class GITextCloud extends AppWidgetProvider {
     private static int widgetCount = 0;
     private static Cloud gitc;
 
+
     //public constants
-    public static final String INCREMENT_COUNT_UPDATE = "INCREMENT_COUNT_UPDATE";
-    public static final String LAUNCH_GMAIL_GAPPS = "LAUNCH_GMAIL_GAPPS";
+    public static final String INCREMENT_COUNT_UPDATE = "GITC_INCREMENT_COUNT_UPDATE";
+    public static final String LAUNCH_GMAIL_GAPPS = "GITC_LAUNCH_GMAIL_GAPPS";
+    public static final String TAG = "GITextCloud";
     public static final int DEFAULT_MAX_EMAIL_COUNT = 10;
 
 
@@ -44,13 +44,7 @@ public class GITextCloud extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        if (intent.getAction().equals("android.appwidget.action.APPWIDGET_ENABLED")) {
-            //do nothing
-        }
-        else if (intent.getAction().equals("android.appwidget.action.APPWIDGET_DISABLED")) {
-            //do nothing
-        }
-        else if (intent.getAction().equals(INCREMENT_COUNT_UPDATE)) {
+        if (intent.getAction().equals(INCREMENT_COUNT_UPDATE)) {
             //increment count, update views, and start another alarm
             refreshViews(context, R.id.unread_inbox_count, R.layout.gitc_widget_html, "" + count);
 
@@ -69,27 +63,31 @@ public class GITextCloud extends AppWidgetProvider {
             mailClient.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(mailClient);
         }
-        else {
-            //Toast.makeText(context, "count = " + count + " | " + intent.getAction(), Toast.LENGTH_LONG).show();
+        else if (intent.getAction().equals("mobi.intuitit.android.hpp.ACTION_READY")) {
+            //attach an onClick intent to the layout
+            final Intent onClick = new Intent(context, GITextCloud.class);
+            onClick.setAction(LAUNCH_GMAIL_GAPPS);
+            PendingIntent onClickPending = PendingIntent.getBroadcast(context, 0, onClick, 0);
+            RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.gitc_widget_html);
+            rv.setOnClickPendingIntent(R.id.full_widget, onClickPending);
+
+            AppWidgetManager manager = AppWidgetManager.getInstance(context);
+            int[] ids = manager.getAppWidgetIds(new ComponentName(context, GITextCloud.class));
+            for (int id : ids) {
+                manager.updateAppWidget(id, rv);
+            }
         }
+        else {
+            //android.util.Log.i(TAG, intent.getAction());
+        }
+        android.util.Log.i(TAG, intent.getAction());
     }
 
     /** Called when the activity is first created. */
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-        //Toast.makeText(context, "onUpdate()", Toast.LENGTH_SHORT).show();
+        gitc.clear();
 
-        //attach an onClick intent to the layout
-        final Intent onClick = new Intent(context, GITextCloud.class);
-        onClick.setAction(LAUNCH_GMAIL_GAPPS);
-        PendingIntent onClickPending = PendingIntent.getBroadcast(context, 0, onClick, 0);
-        RemoteViews rv1 = new RemoteViews(context.getPackageName(), R.layout.gitc_widget_html);
-        rv1.setOnClickPendingIntent(R.id.full_widget, onClickPending);
-
-
-        for (int appWidgetId : appWidgetIds) {
-            appWidgetManager.updateAppWidget(appWidgetId, rv1);
-        }
     }
 
 
@@ -121,30 +119,4 @@ public class GITextCloud extends AppWidgetProvider {
         PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         am.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + (seconds * 1000), pendingIntent);
     }
-
-
-
-
-/* DEPRECATED CODE */
-
-///*
-//
-//
-//    */
-///* DEPRECATED -- FOR TESTING ONLY
-//     *
-//     *
-//     *//*
-//
-//    private void refreshViewByID(Context context, int viewID, String upDate) {
-//        RemoteViews rv = new RemoteViews(context.getPackageName(), R.layout.main);
-//        rv.setTextViewText(viewID, upDate);
-//        AppWidgetManager manager = AppWidgetManager.getInstance(context);
-//        ComponentName cName = new ComponentName(context, GITextCloud.class);
-//        widgetCount = manager.getAppWidgetIds(cName).length;
-//        manager.updateAppWidget(cName, rv);
-//    }
-
-
-
 }

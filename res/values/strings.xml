@@ -4,4 +4,5 @@
     <string name="widget_text"> </string>
     <string name="alarm">Alarm Manager</string>
     <string name="null_fill"></string>
+    <string name="set_preferences">Gmail Inbox Text Cloud Preferences</string>
 </resources>
