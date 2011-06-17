@@ -2,17 +2,25 @@
 
 <!-- This is a primitive example showing the different types of preferences available. -->
 <PreferenceScreen
-        xmlns:android="http://schemas.android.com/apk/res/android">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:title="@string/set_preferences">
 
     <PreferenceCategory
-            android:title="aaaa">
+            android:title="Enter Text For Display">
 
-        <CheckBoxPreference
-                android:key="checkbox_preference"
-                android:title="bbbb"
-                android:summary="summary_toggle_preference" />
+        <EditTextPreference android:key="pref_text"
+                            android:id="@+id/pref_text_id"
+                            android:title="Text to Display"
+                            android:summary="Pick Something Fun to Display on the Home Screen"
+                            android:defaultValue="Something Fun!!"
+                            android:dialogTitle="Enter Text For Display"
+                            android:selectAllOnFocus="true"/>
 
     </PreferenceCategory>
+
+    <PreferenceScreen android:id="@+id/color_chooser"
+                    android:key="@string/color_pref_count"
+                    android:onClick="onPreferenceClick"/>
 
     <PreferenceCategory
             android:title="cccc">

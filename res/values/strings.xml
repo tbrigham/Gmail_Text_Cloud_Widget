@@ -3,6 +3,12 @@
     <string name="app_name">Gmail Text Cloud</string>
     <string name="widget_text"> </string>
     <string name="alarm">Alarm Manager</string>
-    <string name="null_fill"></string>
+    <string name="null_fill"> </string>
     <string name="set_preferences">Gmail Inbox Text Cloud Preferences</string>
+    <string name="sharedprefs_file">com.tsb.fistfulofneurons.gmailinboxtextcloud.GITextCloud.SHARED_PREFERENCES</string>
+    <string name="settings_bg_color_confirm">choose</string>
+    <string name="settings_default_color_confirm">default</string>
+    <string name="settings_bg_color_dialog">Choose a Color</string>
+    <string name="color_pref_count">COLOR_PREF_COUNT</string>
+    <string name="color_pref_cloud">COLOR_PREF_CLOUD</string>
 </resources>
